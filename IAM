@@ -1,0 +1,4 @@
+
+#How to disassocate the role
+aws ec2 describe-iam-instance-profile-associations --filters Name=instance-id,Values=<instance-id>a --region us-west-2 | jq '.IamInstanceProfileAssociations[]' | jq '.AssociationId' | tr -d "\""
+aws ec2 disassociate-iam-instance-profile --association-id <associate-id>--region us-west-2
