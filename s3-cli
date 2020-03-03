@@ -1,0 +1,2 @@
+##TO import s3 object to local
+aws s3api get-object --bucket tesrt-amazoncloudwatch --key  QualysAgent/QualysCloudAgent.exe QualysCloudAgent.exe
