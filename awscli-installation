@@ -1,0 +1,8 @@
+##steps for awscli installation 
+
+yum install python3 -y
+curl -O https://bootstrap.pypa.io/get-pip.py
+python3 get-pip.py --user
+echo "export PATH=~/.local/bin:$PATH" >>~/.bash_profile
+source ~/.bash_profile
+pip3 install awscli --upgrade --user
