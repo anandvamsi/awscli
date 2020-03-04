@@ -1,0 +1,28 @@
+After creating the dockerfile Execute the below commands to send the image to ECR
+Execute the below commands in ec2
+$(aws ecr get-login --no-include-email --region us-west-2)
+docker build -t awscli .
+docker tag awscli:latest <aws account_number>.dkr.ecr.us-west-2.amazonaws.com/awscli:latest
+docker push <aws account_number>.dkr.ecr.us-west-2.amazonaws.com/awscli:latest
+
+docker push <aws account_number>.dkr.ecr.us-west-2.amazonaws.com/awscli:latest
+The push refers to repository [<aws account_number>.dkr.ecr.us-west-2.amazonaws.com/awscli]
+3dd68f07fdd5: Pushed
+b3f059f6f52f: Pushed
+f851fa9a13c6: Pushed
+69b71fa152b2: Pushed
+1a943bb6cdd4: Pushed
+bfa792c7656a: Pushed
+f489b2771043: Pushed
+29225a0c7bdc: Pushed
+049c1c3ddc70: Pushed
+e23082db881c: Layer already exists
+67307a965174: Layer already exists
+471dc0a5ccc5: Layer already exists
+70152734eac9: Layer already exists
+c61d01f47bef: Layer already exists
+11210af4e885: Layer already exists
+178572d98447: Layer already exists
+61b675163d2a: Layer already exists
+5216338b40a7: Layer already exists
+latest: digest: sha256:d7c10628a7818d26273a554b9
