@@ -1,0 +1,66 @@
+step1:
+-----------
+In the ACM PCA node.
+Create a Role AWSACMShareAccess with following permissions.
+1.
+AWSCertificateManagerFullAccess
+AWSCertificateManagerPrivateCAFullAccess
+one with manged policy
+------->>-----------------
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "acm-pca:IssueCertificate",
+                "acm-pca:GetCertificate",
+                "acm-pca:DescribeCertificateAuthority",
+                "acm:RequestCertificate"
+            ],
+            "Resource": "arn:aws:acm-pca:us-west-2:<ACM PCA AWS ACCOYNT>:certificate-authority/XXXX-cd6f-427a-8771-9f337ff69404"
+        }
+    ]
+}
+---->>----------------
+
+Step2:
+Create a trust relationship in the role AWSACMShareAccess
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::<client-node-account-number>:root"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+
+
+
+
+
+In the client node
+-------------------------------------------
+
+step1
+[ec2-user@ip-10-80-XX-14 .aws]$ cat ~ec2-user/.aws/config
+[profile acmtest]
+role_arn = arn:aws:iam::<ACM CA AWS Account>:role/AWSACMShareAccess
+credential_source = Ec2InstanceMetadata
+[ec2-user@ip-10-80-224-14 .aws]$
+
+
+Step2:
+From the Node execute the below command
+[ec2-user@ip-10-80-XX-14 .aws]$ aws acm --profile acmtest request-certificate --domain-name test1.corp.XX.com --certificate-authority-arn arn:aws:acm-pca:us-west-2:XXXXX0688:certificate-authority/83cd768e-cd6f-427a-8771-9f337ff69404 --region us-west-2
+{
+    "CertificateArn": "arn:aws:acm:us-west-2:XXXX530688:certificate/95004615-31ec-441e-a88a-3954598a9e1b"
+}
+
+This will generate certificate in the acm pca node.
