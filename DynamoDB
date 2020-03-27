@@ -1,6 +1,14 @@
 Adding data to DynamoDB put operation
 
+#Table backup to json
+aws dynamodb scan --table-name <table name> --region us-west-2 | jq '{"<table name>": [.Items[] | {PutRequest: {Item: .}}]}' > data.json
 
+#Table restore in batch mode
+aws dynamodb batch-write-item --request-items file://data.json --region us-west-2
+
+
+
+#Note for adding single data 
 (base) [root@ip-10-XX-XX-14 ec2-user]# aws dynamodb put-item  --table-name TestExportTable  --item file://data.json_bkp --return-consumed-capacity TOTAL --region us-west-2
 {
     "ConsumedCapacity": {
