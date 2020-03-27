@@ -1,0 +1,21 @@
+Adding data to DynamoDB put operation
+
+
+(base) [root@ip-10-XX-XX-14 ec2-user]# aws dynamodb put-item  --table-name TestExportTable  --item file://data.json_bkp --return-consumed-capacity TOTAL --region us-west-2
+{
+    "ConsumedCapacity": {
+        "CapacityUnits": 1.0,
+        "TableName": "TestExportTable"
+    }
+}
+(base) [root@ip-10-XX-XX-14 ec2-user]# cat data.json_bkp
+{
+          "age": {
+            "N": "34"
+          },
+          "id": {
+            "N": "3"
+          }
+}
+
+
