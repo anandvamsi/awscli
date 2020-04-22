@@ -64,3 +64,10 @@ From the Node execute the below command
 }
 
 This will generate certificate in the acm pca node.
+
+
+#Removing password from the pem
+openssl rsa -in privatekey.pem -out privatekey-out.pem -passin file:p2passphrase.txt
+p2passphrase.txt is the password to unlock pvt pvtkey 
+privateky-out.pem is the resultant file
+
