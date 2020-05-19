@@ -1,0 +1,11 @@
+
+Execute this command that will create a alert for i-0f2XXXXXX instance
+
+aws cloudwatch put-metric-alarm --alarm-name StatusCheckFailed-Alarm-cloudwatchPoc --metric-name StatusCheckFailed 
+--namespace AWS/EC2 --statistic Maximum --dimensions Name=InstanceId,Value=i-0f2XXXXXX --unit Coun
+t --period 300 --evaluation-periods 2 --threshold 1 --comparison-operator GreaterThanOrEqualToThreshold
+--alarm-actions arn:aws:sns:us-west-2:XXXXXX:CloudWatchAlerts
+
+Notes::
+Make sure you the Role attached to instance -like cloudwatchPut Metric role
+We can create alert for other instance also by just changing Value
