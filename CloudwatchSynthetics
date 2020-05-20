@@ -1,0 +1,21 @@
+###Cloudwatch Sythetics:-
+
+ CloudWatch Synthetics to create canaries, configurable scripts that run on a schedule,
+ to monitor your endpoints and APIs. Canaries follow the same routes and perform the same actions as a customer, 
+ which makes it possible for you to continually verify your customer experience even when you don't have any customer
+ traffic on your applications. By using canaries, you can discover issues before your customers do
+
+ For the testing Simple web-portal, i was made use of https://www.amazon.com
+
+ Open the cloudwatch portal 
+ In the Navigation pane under the synthetics ,select Synthetics
+ select create canary-->"use Blueprint"--->"heatBeatMonitoring"
+ Enter the name of canary
+ Application or endpoints URL as www.amazon.com 
+ Rest leave it default options. Note there is option to createAlarm also.
+ Hit Create Canary-- This will take around 5 to 10 minutes
+ cananry will hit this website every 5 minute check if its available or not.
+ It will even check the insiide api calls of amazon and response time
+ 
+ You will home page of www.amzon.com getting refreshed every 5 min, same one customer seems.
+ 
