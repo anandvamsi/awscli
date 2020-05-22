@@ -1,0 +1,58 @@
+###Problem i lost the pem/ppk file for 10.86.x.x instance for user, but i need to login to server anyhow.
+
+Solution.
+
+Step 1:- Login to any linux machine and generate key pair using keygen
+[ec2-user@ip-10-86-221-246 ~]$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/ec2-user/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/ec2-user/.ssh/id_rsa.
+Your public key has been saved in /home/ec2-user/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:IftQrs/ZszprQlzFSsMBxDXaoV/CjpxHBfq/TabmToljU ec2-user@ip-10-80-224-246.corp.hds.com
+The key's randomart image is:
++---[RSA 2048]----+
+|   .+o...        |
+|  ...+o+.        |
+|   +=o++o.       |
+|   .=*++o        |
+|   o+o*+S        |
+|    .*ooE        |
+|     .=Bo.       |
+|     .=+*o       |
+|     .o=+o       |
++----[SHA256]-----+
+
+
+
+Step2:-
+Go to ~/.ssh/
+mv id.rsa to <new-username>.pem
+ssh-keygen -y -f <new-username>.pem ## this will generate a public key out of private key
+
+Example
+[ec2-user@ip-10-86-221-246 .ssh]$ ssh-keygen -y -f admin.pem
+ssh-rsa AAAAB3NzaC1yc2EAAAAD.......................
+
+
+Step3:
+Stop the instance which you had issue.
+Action select view/Change user-data
+
+step4:-
+Add the below content in the user-data 
+Note: replace the public key with generated one 
+
+
+#cloud-config
+cloud_final_modules:
+- [users-groups,always]
+users:
+  - name: <new-username>
+    groups: [ wheel ]
+    sudo: [ "ALL=(ALL) NOPASSWD:ALL" ]
+    shell: /bin/bash
+    ssh-authorized-keys: 
+    - ssh-rsa AAAAB3NzaC1yc2EAAAAD.......................
