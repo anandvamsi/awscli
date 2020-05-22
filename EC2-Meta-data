@@ -1,0 +1,10 @@
+There are 3 ways where we can get meta data of a ec2 instance
+
+Step1:
+cat /run/cloud-init/instance-data-sensitive.json
+
+Step2:
+# ec2-metadata --all
+
+step:
+curl http://169.254.169.254
