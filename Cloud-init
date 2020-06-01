@@ -63,4 +63,23 @@ Config :- configrations that doest't affect other stages of boot
 Final :- configrations that must be run as late as possible.
 
 
+###Placing Cloud init in the file for pipeline purpose
+ XXXXcloud.cfg.d]$ cat /etc/cloud/cloud.cfg.d/20_carbobblack.cfg
+#cloud-config
+runcmd:
+    - touch /tmp/testing
+    - cat /etc/passwd
+    - sh /home/ec2-user/date-command.sh > /home/ec2-user/data
+    - rm /home/ec2-user/date-command.sh
+groups:
+    - data1
+    - data2
+packages:
+     -  jq
+     - htop
+
+>>
+    This will execute the command mentioned in run-cmd ,This will execute the groups and finally install the packages.
+
+
 
