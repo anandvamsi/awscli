@@ -1,0 +1,66 @@
+Cloud-init
+-----------
+stands for Cloud instance initialization software..
+
+
+Cloud-init package is installed in the OS images supplied by most clouds.
+
+On systemd-based Linux, cloud-init.service usually run at boot, as a one-shot service.
+
+Building a new machine image for each role a virtual machine must play in your time infrastrurre can be costly in terms of time.
+
+shell script will simple sameple
+
+###Testing 
+
+#Print linux time stamp, mention this in the user data
+date +%s > /ec2-user/data
+THis will print 
+
+##Reboot the node but you will see the same data since this runs once one.
+
+
+we can even do python script
+#!/user/bin/python3
+
+import time
+fd = open("/path/to/file","w")
+fd.write("Writt in python %f" % time.time())
+fd.close()
+
+
+#cloud.config-schema
+-  is a complex YAML schema, whose valid components are affected by which modules are installed.
+
+
+##Two files associated with cloud-init
+$ ls -l /var/log/cloud-init*
+-rw-r--r-- 1 root root 99042 May 22 20:13 /var/log/cloud-init.log
+-rw-r--r-- 1 root root 14975 May 22 20:13 /var/log/cloud-init-output.log
+
+
+Examples of cloud-init which needs to placed in the user-data in AWS
+----------------->>>>copy paste below------------------------
+#cloud-config
+runcmd:
+    - touch /tmp/testing
+    - cat /etc/passwd   
+groups:
+    - data1
+    - data2
+packages:
+     -  jq
+---------------->>>>------------------------     
+
+
+
+cloud-init runs 3 phases
+--------------------------
+init phase:- essential configration that must be done early on
+
+Config :- configrations that doest't affect other stages of boot
+
+Final :- configrations that must be run as late as possible.
+
+
+
