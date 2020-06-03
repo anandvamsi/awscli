@@ -1,8 +1,14 @@
 ##steps for awscli installation 
-
+Method 1:
 yum install python3 -y
 curl -O https://bootstrap.pypa.io/get-pip.py
 python3 get-pip.py --user
 echo "export PATH=~/.local/bin:$PATH" >>~/.bash_profile
 source ~/.bash_profile
 pip3 install awscli --upgrade --user
+
+
+method 2:
+curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+unzip awscli-bundle.zip
+sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
