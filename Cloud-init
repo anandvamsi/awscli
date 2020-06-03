@@ -83,3 +83,16 @@ packages:
 
 
 
+Use case 2
+------------
+we can also execute shell scripts in cloud-init
+
+#cat /etc/cloud/cloud.cfg.d/20_carbXXXXblack.cfg
+#cloud-config
+runcmd:
+  - chmod +x /home/ec2-user/.sh
+  - dos2unix /home/ec2-user/AgentActivate.sh
+  - bash /home/ec2-user/AgentActivate.sh
+  - rm /home/ec2-user/AgentActivate.sh
+
+
