@@ -1,0 +1,9 @@
+#Creating CustoAlert for memory 
+
+#!/bin/bash
+USEDMEMORY=$(free -m | awk 'NR==2{printf "%.2f\t", $3*100/$2 }')
+region="us-west-2"
+instance_id=`ec2-metadata  | grep instance-id |awk -F: '{print $2}' | tr -d " "`
+sns_topic_name="CloudWatchAlerts"
+aws cloudwatch put-metric-data --metric-name memory-usage-$instance_id --dimensions Instance=$instance_id  --namespace "Custom" --value $USEDMEMORY --region $region
+
