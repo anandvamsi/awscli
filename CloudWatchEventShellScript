@@ -1,8 +1,38 @@
 Notes::
 #This will attach SNS topic to the Event Rule EC2InstanceStateChange-$instance_name
 
+##Step1 Create a event
+#!/bin/bash
+region="us-west-2"
+instance_id=`ec2-metadata  | grep instance-id |awk -F: '{print $2}' | tr -d " "`
+sns_topic_name="CloudWatchAlerts"
+rule_name="EC2InstanceStateChange-$instance_id"
 
 
+event_pattern='{
+  "source": [
+    "aws.ec2"
+  ],
+  "detail-type": [
+    "EC2 Instance State-change Notification"
+  ],
+  "detail": {
+    "state": [
+      "shutting-down",
+      "stopping",
+      "terminated",
+      "stopped"
+    ],
+      "instance-id": [ "'"$instance_id"'" ]
+  }
+}'
+
+
+aws events put-rule --name "$rule_name" --event-pattern "$event_pattern" --region $region
+----------------------------------------------------------------------------------------------------------
+
+
+##step2
 ##SNS Attached to Rule Shell script
 #!/bin/bash
 region="us-west-2"
@@ -12,7 +42,7 @@ rule_name_interrupted="EC2InstanceStateChange-$instance_name"
 
 sns_target_interrupted='[{
   "Id": "target-sns-'"$sns_topic_name"'",
-  "Arn": "'"arn:aws:sns:us-west-2:<AccoutNUMBER>:CloudWatchAlerts"'",
+  "Arn": "'"arn:aws:sns:us-west-2:<Account-Name>:CloudWatchAlerts"'",
   "InputTransformer": {
     "InputPathsMap": {
       "title": "$.detail-type",
@@ -21,14 +51,15 @@ sns_target_interrupted='[{
       "time": "$.time",
       "region": "$.region",
       "instance": "$.detail.instance-id",
+      "state":"$.detail.state",
       "action": "$.detail.instance-action"
     },
     "InputTemplate":
-      "\"<title>: <source> will <action> <instance> ('"$instance_name"') in <region> of <account> at <time>\""
+    "\"At <time>, the status of your EC2 instance ('"$instance_name"') on account <account> in the AWS Region <region> has changed to <state>.\""
   }
 }]'
 
 aws events put-targets \
   --region "$region" \
   --rule "$rule_name_interrupted" \
-  --targets "$sns_target_interrupted"
+  --targets "$sns_target_interrupted
