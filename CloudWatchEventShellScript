@@ -1,0 +1,34 @@
+Notes::
+#This will attach SNS topic to the Event Rule EC2InstanceStateChange-$instance_name
+
+
+
+##SNS Attached to Rule Shell script
+#!/bin/bash
+region="us-west-2"
+instance_name=`ec2-metadata  | grep instance-id |awk -F: '{print $2}' | tr -d " "`
+sns_topic_name="CloudWatchAlerts"
+rule_name_interrupted="EC2InstanceStateChange-$instance_name"
+
+sns_target_interrupted='[{
+  "Id": "target-sns-'"$sns_topic_name"'",
+  "Arn": "'"arn:aws:sns:us-west-2:<AccoutNUMBER>:CloudWatchAlerts"'",
+  "InputTransformer": {
+    "InputPathsMap": {
+      "title": "$.detail-type",
+      "source": "$.source",
+      "account": "$.account",
+      "time": "$.time",
+      "region": "$.region",
+      "instance": "$.detail.instance-id",
+      "action": "$.detail.instance-action"
+    },
+    "InputTemplate":
+      "\"<title>: <source> will <action> <instance> ('"$instance_name"') in <region> of <account> at <time>\""
+  }
+}]'
+
+aws events put-targets \
+  --region "$region" \
+  --rule "$rule_name_interrupted" \
+  --targets "$sns_target_interrupted"
