@@ -22,3 +22,29 @@ aws cloudwatch put-metric-alarm --alarm-name i-XXXXXX-root-disk-space-utilizatio
 aws cloudwatch put-metric-alarm --alarm-name cpu-monitoring-i-XXXXXX --alarm-description "Alarm when CPU exceeds 70 percent" --metric-name CPUUtilization --namespace AWS/EC2
 --statistic Average --period 300 --threshold 70 --comparison-operator GreaterThanThreshold --dimensions "Name=InstanceId,Value=i-XXXXXX" --evaluation-periods 2 
 --alarm-actions arn:aws:sns:us-west-2:XXXX:CloudWatchAlerts --unit Percent  --region us-west-2
+
+
+##Execute this command that will create a alert for i-0f2XXXXXX instance for Memory Utilization
+
+Prerequits for memory utilization
+sudo yum install -y perl-Switch perl-DateTime perl-Sys-Syslog perl-LWP-Protocol-https perl-Digest-SHA.x86_64
+cd $HOME
+wget http://aws-cloudwatch.s3.amazonaws.com/downloads/CloudWatchMonitoringScripts-1.2.1.zip
+unzip CloudWatchMonitoringScripts-1.2.1.zip
+rm CloudWatchMonitoringScripts-1.2.1.zip
+(crontab -l 2>/dev/null; echo "*/5 * * * * ~/aws-scripts-mon/mon-put-instance-data.pl --mem-used --mem-util --disk-space-util --disk-path=/ --disk-path=/data --from-cron") | crontab -
+
+aws cloudwatch put-metric-alarm \
+--alarm-name memory-usage-utilization-$instance_id \
+--alarm-description "Alarm when memory exceeds $MEMORY_THRESHOLD percent" \
+--metric-name MemoryUtilization \
+--namespace System/Linux \
+--statistic Average \
+--period 30 \
+--threshold $MEMORY_THRESHOLD \
+--comparison-operator GreaterThanThreshold \
+--dimensions Name=InstanceId,Value=$instance_id \
+--evaluation-periods 1 \
+--alarm-actions $sns_arn \
+--unit Percent \
+--region $region
