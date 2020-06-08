@@ -1,5 +1,5 @@
 
-Execute this command that will create a alert for i-0f2XXXXXX instance
+###Execute this command that will create a alert for i-0f2XXXXXX instance for instance status check
 
 aws cloudwatch put-metric-alarm --alarm-name StatusCheckFailed-Alarm-cloudwatchPoc --metric-name StatusCheckFailed 
 --namespace AWS/EC2 --statistic Maximum --dimensions Name=InstanceId,Value=i-0f2XXXXXX --unit Coun
@@ -9,3 +9,16 @@ t --period 300 --evaluation-periods 2 --threshold 1 --comparison-operator Greate
 Notes::
 Make sure you the Role attached to instance -like cloudwatchPut Metric role
 We can create alert for other instance also by just changing Value
+
+###Execute this command that will create a alert for i-0f2XXXXXX instance for DiskUtilization
+
+aws cloudwatch put-metric-alarm --alarm-name i-XXXXXX-root-disk-space-utilization --alarm-description 'Alarm when root disk space exceeds 80 percent'
+--metric-name DiskSpaceUtilization --namespace System/Linux --statistic Average --period 300 --threshold 80 --treat-missing-data breaching --comparison-operator GreaterThanThreshold 
+--dimensions Name=Filesystem,Value=/dev/xvda1 Name=InstanceId,Value=i-XXXXX Name=MountPath,Value=/ --evaluation-periods 1
+--alarm-actions arn:aws:sns:us-west-2:XXXXXXX:CloudWatchAlerts --unit Percent --region us-west-2
+
+##Execute this command that will create a alert for i-0f2XXXXXX instance for CPUutilization
+
+aws cloudwatch put-metric-alarm --alarm-name cpu-monitoring-i-XXXXXX --alarm-description "Alarm when CPU exceeds 70 percent" --metric-name CPUUtilization --namespace AWS/EC2
+--statistic Average --period 300 --threshold 70 --comparison-operator GreaterThanThreshold --dimensions "Name=InstanceId,Value=i-XXXXXX" --evaluation-periods 2 
+--alarm-actions arn:aws:sns:us-west-2:XXXX:CloudWatchAlerts --unit Percent  --region us-west-2
