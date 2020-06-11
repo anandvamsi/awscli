@@ -1,0 +1,42 @@
+Situation:-
+
+I have a SNS topic that will send email based which is even driven from cloudwatch metric.
+I have 107 AWS accounts, all these cloudwatch metric needs be deployed from all the 107 accounts will trigger SNS in one account
+
+Instead of creating SNS topic in all the accounts, we can create SNS in one account and add permission(allow) for ther accounts using 
+ORG-ID
+
+Here find below SNS access policy which suits the use case
+
+>>>>-------------------------------------------------------->>>>
+
+{
+    "Version": "2008-10-17",
+    "Id": "__default_policy_ID",
+    "Statement": [
+        {
+            "Sid": "allow-publish-from-organization-accounts",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": [
+                "sns:Publish"
+            ],
+            "Resource": "<snsTopicArn>",
+            "Condition": {
+                "StringEquals": {
+                    "aws:PrincipalOrgID": "<ORG-ID>
+                }
+            }
+        }
+    ]
+}
+
+
+>------------------------------------------------------------------>>>
+Fill the SNS arn and ORG-ID ,ORG-ID can optained from AWS root account- under organization settings.
+
+After adding this try sending email using sns command from another Account.
+aws sns publish --topic-arn "arn:aws:sns:us-west-2:XXXXXXX:CloudWatchAlerts" --message file://message.txt --region us-west-2
+
