@@ -12,3 +12,9 @@ method 2:
 curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
 unzip awscli-bundle.zip
 sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+
+Method 3:-
+For python 2.6 node
+ curl https://s3.amazonaws.com/aws-cli/awscli-bundle-1.16.188.zip -o awscli-bundle.zip
+ unzip awscli-bundle.zip
+ ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
