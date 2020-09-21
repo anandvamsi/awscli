@@ -1,0 +1,3 @@
+
+##To filter the message and average it by the server name
+filter @message  like /Binding to IPv6 address not available since kernel/ | fields @ingestionTime, @logStream | stats count(*) as error_count by @logStream
