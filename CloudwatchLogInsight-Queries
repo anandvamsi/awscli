@@ -1,4 +1,23 @@
 
+The least permission given to IAM user to push the logs from the server to any Log group starts with Dev
+>>>>>
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:us-west-2:<AWS Account number>:log-group:Dev*:*"
+        }
+    ]
+}
+
+
+
 #To show all the fields
 fields @ingestionTime, @logStream, @message, @timestamp
 
