@@ -33,4 +33,7 @@ filter @message like /Exception/
     | sort exceptionCount desc
     
 #Query specic from server
-fields @message | filter @logStream like /<hostname>/
+filter @logStream like /<hostname>/
+
+#Getting the count error specfic in host
+filter @logStream like /<hostname>/ | filter @message like /OMI/ |stats count() by bin(2h)
