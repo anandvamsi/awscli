@@ -32,3 +32,5 @@ filter @message like /Exception/
     | stats count(*) as exceptionCount by bin(1h)
     | sort exceptionCount desc
     
+#Query specic from server
+fields @message | filter @logStream like /<hostname>/
