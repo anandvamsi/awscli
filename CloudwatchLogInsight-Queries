@@ -37,3 +37,11 @@ filter @logStream like /<hostname>/
 
 #Getting the count error specfic in host
 filter @logStream like /<hostname>/ | filter @message like /OMI/ |stats count() by bin(2h)
+
+
+#Query for stats for IP/API and method
+parse @message "* - * [*]" as ip, user,time
+parse @message "* - * [*]" as ip, user,time  | stat count(*) by ip
+
+parse @message "* - * [*] * * " as ip, user,time,method,API | stats count(*) by API
+Parse @message "* - * [*] * * *" as ip, user,time,method,data | stat count(*) by method
