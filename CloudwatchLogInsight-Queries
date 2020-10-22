@@ -48,3 +48,6 @@ Parse @message "* - * [*] * * *" as ip, user,time,method,data | stat count(*) by
 
 #Order by HTTP_response 
   parse @message "* - * [*] * * * * *" as ip, user,time,method,API,RequestType,http_code | stats count(*) by http_code
+  
+#Duration Desending order
+  parse @message "* - * [*] * * * * * *" as ip, user,time,method,API,RequestType,http_code,Duration | sort Duration desc
