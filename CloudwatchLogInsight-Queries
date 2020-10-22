@@ -45,3 +45,6 @@ parse @message "* - * [*]" as ip, user,time  | stat count(*) by ip
 
 parse @message "* - * [*] * * " as ip, user,time,method,API | stats count(*) by API
 Parse @message "* - * [*] * * *" as ip, user,time,method,data | stat count(*) by method
+
+#Order by HTTP_response 
+  parse @message "* - * [*] * * * * *" as ip, user,time,method,API,RequestType,http_code | stats count(*) by http_code
