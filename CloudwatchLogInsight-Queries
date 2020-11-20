@@ -15,8 +15,82 @@ The least permission given to IAM user to push the logs from the server to any L
         }
     ]
 }
+-------------------------------------------------------
+>> sample Json file to push mulitple log files to cloud watch log insights
+1. contnet for /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.d/file_config.json
+
+{
+        "agent": {
+                "run_as_user": "root",
+                "region": "us-west-2"
+        },
+        "logs": {
+                "logs_collected": {
+                        "files": {
+                                "collect_list": [
+                                        {
+                                                "file_path": "/var/log/messages*",
+                                                "log_group_name": "DevMessages",
+                                                "log_stream_name": "{hostname}"
+                                        },
+                                        {
+                                                "file_path": "/var/log/secure*",
+                                                "log_group_name": "DevSecure",
+                                                "log_stream_name": "{hostname}"
+                                        },
+                                        {
+                                                "file_path": "/var/log/boot.log*",
+                                                "log_group_name": "DevBootlog",
+                                                "log_stream_name": "{hostname}"
+                                        },
+                                        {
+                                                "file_path": "/var/log/dnf.*",
+                                                "log_group_name": "DevDnf",
+                                                "log_stream_name": "{hostname}"
+                                        },
+                                        {
+                                                "file_path": "/var/log/maillog*",
+                                                "log_group_name": "DevMaillog",
+                                                "log_stream_name": "{hostname}"
+                                        },
+                                        {
+                                                "file_path": "/var/log/vmware-network.*log",
+                                                "log_group_name": "DevVmware-network",
+                                                "log_stream_name": "{hostname}"
+                                        },
+                                        {
+                                                "file_path": "/var/log/vmware-vmsvc.*log",
+                                                "log_group_name": "DevVmware-vmsvc",
+                                                "log_stream_name": "{hostname}"
+                                        },
+                                        {
+                                                "file_path": "/var/log/vmware-vmsvc-root.*log",
+                                                "log_group_name": "DevVmware-vmsvc-root",
+                                                "log_stream_name": "{hostname}"
+                                       },
+                                        {
+                                                "file_path": "/var/log/vmware-vmtoolsd-root.*log",
+                                                "log_group_name": "DevVmware-vmtoolsd-root",
+                                                "log_stream_name": "{hostname}"
+                                        }
+                                ]
+                        }
+                }
+        }
+}
 
 
+
+2.	systemctl stop amazon-cloudwatch-agent.service
+3.	systemctl start amazon-cloudwatch-agent.service
+
+
+
+
+
+
+
+---------------------
 
 #To show all the fields
 fields @ingestionTime, @logStream, @message, @timestamp
