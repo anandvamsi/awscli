@@ -91,6 +91,18 @@ The least permission given to IAM user to push the logs from the server to any L
 
 
 ---------------------
+Basic of queries 
+-------------------
+
+Log insights has a custom query language which is pretty similar to SQL
+display → select
+fields → attributes/columns available for display
+filter → where
+stats → group by
+sort → order by
+limit → limit
+
+
 
 #To show all the fields
 fields @ingestionTime, @logStream, @message, @timestamp
@@ -130,4 +142,6 @@ Parse @message "* - * [*] * * *" as ip, user,time,method,data | stat count(*) by
   #Container query insights
   stats avg(CpuUtilized) as CPU, avg(MemoryUtilized) as Mem by TaskId, ContainerName
 | sort Mem, CPU desc
+
+
 
