@@ -125,3 +125,9 @@ Parse @message "* - * [*] * * *" as ip, user,time,method,data | stat count(*) by
   
 #Duration Desending order
   parse @message "* - * [*] * * * * * *" as ip, user,time,method,API,RequestType,http_code,Duration | sort Duration desc
+  
+  
+  #Container query insights
+  stats avg(CpuUtilized) as CPU, avg(MemoryUtilized) as Mem by TaskId, ContainerName
+| sort Mem, CPU desc
+
