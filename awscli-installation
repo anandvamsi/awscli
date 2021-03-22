@@ -18,3 +18,14 @@ For python 2.6 node
 curl https://s3.amazonaws.com/aws-cli/awscli-bundle-1.16.188.zip -o awscli-bundle.zip
 unzip awscli-bundle.zip
 ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+
+
+Install awcli in RHEL8
+In RHEL8 python is not present, we need to install specifically 
+yum install python36
+curl https://s3.amazonaws.com/aws-cli/awscli-bundle-1.16.188.zip -o awscli-bundle.zip
+unzip awscli-bundle.zip
+vim awscli-bundle/install
+change the shebang to python36
+And execute the installer now
+./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
