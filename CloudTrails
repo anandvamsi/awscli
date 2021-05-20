@@ -1,0 +1,15 @@
+
+In this exmaple, we will dowload the cloudtrail data from s3 bucket and look for s3 instances that terminated.
+
+
+step1:-
+make sure instances have permission to dowload the logs from s3 bucket- create a role if required.
+aws s3 cp s3://my_cloudtrail_bucket/AWSLogs/012345678901/CloudTrail/eu-west-1/2019/08/07 ./ --recursive
+
+
+step2:-
+gzip -d * // will uncompress the logs.
+cat * | jq '.Records[] | select(.eventName=="RunInstances")'
+
+step 3:- Looks for Terminated and Stopped instances.
+cat * | jq '.Records[] | select(.eventName=="StopInstances" or .eventName=="TerminateInstances" )'
