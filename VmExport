@@ -1,0 +1,69 @@
+##Exporting a VM from ec2 to vmdk format
+
+- First take the AMI of the image use the AMI ID as the paramter
+
+
+Prerequisite
+Install awscli version 2
+Create a vmexport servicerole with policy policy
+cat trust-policy.json
+{
+   "Version": "2012-10-17",
+   "Statement": [
+      {
+         "Effect": "Allow",
+         "Principal": { "Service": "vmie.amazonaws.com" },
+         "Action": "sts:AssumeRole",
+         "Condition": {
+            "StringEquals":{
+               "sts:Externalid": "vmimport"
+            }
+         }
+      }
+   ]
+}
+
+aws iam create-role --role-name vmimport --assume-role-policy-document "file://trust-policy.json"
+Above will create a role named vmimport
+
+Notes:- Please add Admin policy to vmimport role for required actions
+
+
+
+##Initate the export
+#/usr/local/bin/aws ec2 export-image --image-id ami-0a982393cfabd39da  --disk-image-format VMDK --s3-export-location S3Bucket=awximage121,S3Prefix=exports/
+{
+    "DiskImageFormat": "VMDK",
+    "ExportImageTaskId": "export-ami-097fb57011e91604f",
+    "ImageId": "ami-0a982393cfabd39da",
+    "Progress": "0",
+    "S3ExportLocation": {
+        "S3Bucket": "awximage121",
+        "S3Prefix": "exports/"
+    },
+    "Status": "active",
+    "StatusMessage": "validating"
+}
+
+
+##TO check the status of VM export
+/usr/local/bin/aws ec2 describe-export-image-tasks --export-image-task-ids export-ami-097fb57011e91604f
+{
+    "ExportImageTasks": [
+        {
+            "ExportImageTaskId": "export-ami-097fb57011e91604f",
+            "Progress": "85",
+            "S3ExportLocation": {
+                "S3Bucket": "awximage121",
+                "S3Prefix": "exports/"
+            },
+            "Status": "active",
+            "StatusMessage": "converting",
+            "Tags": []
+        }
+    ]
+}
+
+Wait till progress turns to 100%
+Notes:- This will take  around 10-20min depending the size of image.
+After the completion  check the s3 bucket you would be seeing a image in the location 
