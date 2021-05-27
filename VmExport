@@ -1,10 +1,13 @@
-##Exporting a VM from ec2 to vmdk format
+##Exporting a EC2 image to vmdk format
 
 - First take the AMI of the image use the AMI ID as the paramter
 
 
 Prerequisite
 Install awscli version 2
+
+
+step1
 Create a vmexport servicerole with policy policy
 cat trust-policy.json
 {
@@ -23,13 +26,14 @@ cat trust-policy.json
    ]
 }
 
+
 aws iam create-role --role-name vmimport --assume-role-policy-document "file://trust-policy.json"
 Above will create a role named vmimport
 
 Notes:- Please add Admin policy to vmimport role for required actions
 
 
-
+Step2
 ##Initate the export
 #/usr/local/bin/aws ec2 export-image --image-id ami-0a982393cfabd39da  --disk-image-format VMDK --s3-export-location S3Bucket=awximage121,S3Prefix=exports/
 {
