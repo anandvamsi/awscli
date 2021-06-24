@@ -1,0 +1,38 @@
+
+ 1. Security groups are the central component of AWS firewalls.
+
+ 2.Enable and configure AWS VPC Flow Logs
+Enable AWS VPC Flow Logs for your VPC or Subnet or ENI level. AWS VPC flow logs can be configured to capture both accept and reject entries flowing through the ENI and Security groups of the EC2.
+These VPC Flow log entries can be scanned to detect attack patterns, alert abnormal activities and information flow inside the VPC, and provide valuable insights to the SOC/MS team operations.
+
+3.Categorize your security groups.
+Web servers will have one SG and all DB can have another security groupp.
+
+4.Use proper naming conventions for your security groups.
+Have proper naming conventions for the Amazon Web Services security group
+
+Example:-
+AWS Region+ Environment Code+ OS Type+ Tier+ Application Code’
+Security Group Name – EU-P-LWA001
+AWS Region ( 2 char ) = EU, VA, CA etc
+Environment Code (1 Char) = P-Production , Q-QA, T-testing, D-Development etc
+OS Type (1 Char)= L -Linux, W-Windows etc
+Tier (1 Char)= W-Web, A-App, C-Cache, D-DB etc
+Application Code ( 4 Chars) = A001
+
+
+5.Don’t open ports for 0.0.0.0/0 unless specifically required
+Allowing incoming access by opening up ports for 0.0.0.0/0 in security groups is the most common mistake made by professionals when provisioning resources. Users end up opening their cloud networks and exposing their cloud resources and data to outside threats.
+
+6.Grant access from specific Amazon EC2 security groups or particular IP addresses for any security group rule.
+
+“Amazon Relational Database Service (Amazon RDS) has security group configurations which are examined explicitly, and a warning is released if a rule for security group grants or is probable to grant excessive access to your database. For any security group rule, it is recommended that access from only certain Amazon Elastic Compute Cloud (Amazon EC2) security groups or from a particular IP address should be granted.”
+
+
+7. Close unnecessary system ports.
+Close the ports if nolonger necessary.
+
+
+8.Regularly revisit your security groups to optimize rules
+
+9.Periodically audit security groups to identify those not following the established naming conventions
