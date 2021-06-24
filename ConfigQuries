@@ -1,0 +1,32 @@
+# To get all the lambdas using python2.6
+SELECT
+  accountId,
+  resourceId,
+  resourceType,
+  configuration.runtime,
+  configuration.lastModified,
+  configuration.description
+WHERE
+  resourceType = 'AWS::Lambda::Function'
+  AND configuration.runtime = 'python2.7'
+  
+  
+  #TO list all the EBS volumes unsused
+  SELECT
+  resourceId,
+  accountId,
+  awsRegion,
+  resourceType,
+  configuration.volumeType,
+  configuration.size,
+  resourceCreationTime,
+  tags,
+  configuration.encrypted,
+  configuration.availabilityZone,
+  configuration.state.value
+WHERE
+  resourceType = 'AWS::EC2::Volume'
+  AND configuration.state.value <> 'in-use'
+  
+  
+    
