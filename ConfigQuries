@@ -11,6 +11,29 @@ WHERE
   AND configuration.runtime = 'python2.7'
   
   
+  
+  
+#Running instance sorted by Account id
+SELECT
+  accountId,
+  COUNT(*)
+WHERE
+  resourceType = 'AWS::EC2::Instance'
+  AND configuration.state.name = 'running'
+GROUP BY
+  accountId
+  
+  
+  #Search based on elastic IP
+  SELECT
+  *
+WHERE
+  resourceType = 'AWS::EC2::EIP'
+  AND configuration.publicIp = '<public-IP>'
+  
+  
+  
+  
   #TO list all the EBS volumes unsused
   SELECT
   resourceId,
