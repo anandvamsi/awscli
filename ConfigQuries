@@ -12,6 +12,15 @@ WHERE
   
   
   
+  #Checking with port number
+  select
+  *
+where
+  resourceType = 'AWS::EC2::SecurityGroup'
+  AND configuration.ipPermissions.fromPort = '3306'
+  
+  
+  
   
 #Running instance sorted by Account id
 SELECT
