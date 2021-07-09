@@ -29,4 +29,33 @@ WHERE
   AND configuration.state.value <> 'in-use'
   
   
+ #To list the instace by types
+ SELECT
+  configuration.instanceType,
+  COUNT(*)
+WHERE
+  resourceType = 'AWS::EC2::Instance'
+GROUP BY
+  configuration.instanceType
+  
+  
+  
+  ##RDS is public
+  SELECT
+  resourceId,
+  resourceName,
+  resourceType,
+  accountId,
+  configuration.publiclyAccessible
+WHERE
+  configuration.publiclyAccessible = TRUE
+  
+  
+#RelatioShip of the instances
+SELECT
+  *
+WHERE
+  relationships.resourceId = '<Instance-id>'
+  
+  
     
