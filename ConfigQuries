@@ -94,7 +94,11 @@ WHERE
 WHERE
   configuration.publiclyAccessible = TRUE
   
-  
+ #########################
+#search by tags
+#search by relationshipo
+
+
 #RelatioShip of the instances
 SELECT
   *
@@ -102,4 +106,13 @@ WHERE
   relationships.resourceId = '<Instance-id>'
   
   
+  
+#search by tag
+ #SELECT
+  resourceId,
+  resourceName,
+  resourceType,
+  tags
+WHERE
+  tags.tag = 'Name=Cloud-Custodian'
     
