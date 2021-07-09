@@ -57,6 +57,20 @@ WHERE
   OR supplementaryConfiguration.PublicAccessBlockConfiguration.restrictPublicBuckets = 'false'
   
   
+ #Group by volume type
+  SELECT
+  configuration.volumeType,
+  COUNT(*)
+WHERE
+  resourceType = 'AWS::EC2::Volume'
+GROUP BY
+  configuration.volumeType
+  
+  
+  
+  
+  
+  
   
   ##RDS is public
   SELECT
