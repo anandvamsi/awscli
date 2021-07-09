@@ -1,0 +1,6 @@
+ 
+ #To list the accounts.
+ aws organizations list-accounts | jq '.Accounts[] | .Id + ", "+.Email' | cut -d '"' -f2 | tr -d '[:blank:]' | sort -t , -k 2
+  
+  #To get no of acccounts
+ aws organizations list-accounts | jq '.Accounts[] | .Id + ", "+.Email' | cut -d '"' -f2 | tr -d '[:blank:]' | sort -t , -k 2 | wc -l
