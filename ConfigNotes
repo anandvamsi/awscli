@@ -1,0 +1,35 @@
+AWS Config
+---------
+
+Manually keeping the resources is more a hectic tasks.
+
+1.Purpose:: provide a detailed view of resources in your AWS account
+   - How many resources we have 
+   - what type of resouces we have
+   - How many of them we are not using
+
+#Security aspect
+2. Check for changes in a configration items// all these can be tracked
+    - change in IAM policy
+    - change in a SG  
+   - we can view the details of the change.
+
+we need to Record all resources,
+ - Record all the resources
+ - Record all the Global resources.
+
+ We can have SNS topic configured.
+ we can connect s3
+
+
+Rules
+- To have instance only t2.micro
+
+
+Rule can trigger a cloudwach rule intergrated with lamba that should create a instance more than t2.micro.
+- use used EIP
+- ec2 volumnes on unsed.
+- unrestricted common ports.
+- unrestricted security group 
+
+
