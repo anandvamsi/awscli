@@ -40,6 +40,24 @@ GROUP BY
   
   
   
+  #s3 buckets are public
+    
+SELECT
+  resourceId,
+  resourceType,
+  accountId,
+  supplementaryConfiguration.PublicAccessBlockConfiguration.blockPublicPolicy,
+  supplementaryConfiguration.PublicAccessBlockConfiguration.blockPublicAcls,
+  supplementaryConfiguration.PublicAccessBlockConfiguration.ignorePublicAcls,
+  supplementaryConfiguration.PublicAccessBlockConfiguration.restrictPublicBuckets
+WHERE
+  supplementaryConfiguration.PublicAccessBlockConfiguration.blockPublicPolicy = 'false'
+  OR supplementaryConfiguration.PublicAccessBlockConfiguration.blockPublicAcls = 'false'
+  OR supplementaryConfiguration.PublicAccessBlockConfiguration.ignorePublicAcls = 'false'
+  OR supplementaryConfiguration.PublicAccessBlockConfiguration.restrictPublicBuckets = 'false'
+  
+  
+  
   ##RDS is public
   SELECT
   resourceId,
