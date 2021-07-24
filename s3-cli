@@ -2,8 +2,19 @@
 aws s3api get-object --bucket tesrt-amazoncloudwatch --key  QualysAgent/QualysCloudAgent.exe QualysCloudAgent.exe
 
 ##To create a presign URL
-aws s3 presgin s3://<path of object> --expire-in 300
+aws s3 presign s3://<bucketname>/amazon/ssm/amazon-ssm-agent.log  --expires-in 300
+
 This will create a presign URL with 300 seconds.
 
 ##To get all the objects in the bucket
 aws s3 sync s3://<Bucket-name> .
+
+#Create a new bucket
+aws s3 mb s3://bucket_name
+aws s3 rb s3://bucket_name --force
+
+#upload a file
+aws s3 cp messages s3://newanand12121
+
+#upload a folder
+aws s3 cp log s3://newanand12121 --recursive
