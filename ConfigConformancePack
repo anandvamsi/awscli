@@ -1,0 +1,9 @@
+
+How to list compliant/noncompliant ec2 instances in account.
+-------------------------------------------------------------
+1. Go to delegated master account
+2. select conformance pack under the Aggregators.
+3. select the ORG-view and select with Account ID : XXXX
+4. choose ec2 best pratices 
+5. select with Rule name "ec2-instance-managed-by-systems-manager-conformance-pack"
+6. This will list all the compliant and noncompliant resources.
