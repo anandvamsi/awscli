@@ -1,0 +1,15 @@
+After launching cluster
+
+##TO list the pods and deploy the application
+1. Install kubectl which should be same version of the kubernetes cluster.
+https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html
+
+2. Get the kubeconfig confilf of the cluster
+##aws eks --region us-west-2 update-kubeconfig --name TestCluster
+Added new context arn:aws:eks:us-west-2:205564898031:cluster/TestCluster to /home/ec2-user/.kube/config
+
+3. Exporting to config as the 
+export KUBECONFIG=`~user/.kube/config`
+
+4. Now execute the kubectl to list the pods.
+kubectl get pds
