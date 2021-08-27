@@ -29,3 +29,8 @@ vim awscli-bundle/install
 change the shebang to python36
 And execute the installer now
 ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+
+
+#Install version 2
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
