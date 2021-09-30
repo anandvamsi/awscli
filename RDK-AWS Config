@@ -1,6 +1,10 @@
 RDK
 rdk create ec2_desired_instance_type – runtime python3.7 –resource-types AWS::EC2::Instance –input-parameters '{"desiredInstanceType":"t2.micro"}'
 
+#Example
+## rdk create MyRule2 --runtime python3.6 --resource-types AWS::EC2::Instance --input-parameters '{"GoldenAMI":"HV"}'
+Running create!
+Local Rule files created.
 ##Testing the rule locally
 rdk test-local ec2_desired_instance_type
 
