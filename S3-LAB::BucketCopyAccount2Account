@@ -1,0 +1,72 @@
+# Imagine a case where you want to copy/replicate data from one account another Account from s3
+
+Here is the process.
+
+Reference infomration 
+Source Account number :- 11111111111
+Destination Account number :- 222222222
+
+source bucket: prodstarsoft
+Destination bucket : accountcopystartsoft
+
+
+
+Step1:
+Apply the s3 policy at the source Account S3 bucket.
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "DelegateS3Access",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<Destionation Account number>:root"
+            },
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::prodstarsoft/*",
+                "arn:aws:s3:::prodstarsoft"
+            ]
+        }
+    ]
+}
+
+
+step2
+Create a IAM policy 
+-------------------
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::YOUR-SOURCE-BUCKET-NAME-HERE",
+                "arn:aws:s3:::YOUR-SOURCE-BUCKET-NAME-HERE/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:PutObject",
+                "s3:PutObjectAcl"
+            ],
+            "Resource": [
+                "arn:aws:s3:::YOUR-DESTINATION-BUCKET-NAME-HERE",
+                "arn:aws:s3:::YOUR-DESTINATION-BUCKET-NAME-HERE/*"
+            ]
+        }
+    ]
+}
+
+step3:
+Create a role/IAM user from this policy execute a command.
+aws s3 sync s3://prodstarsoft s3://accountcopystartsoft --source-region us-west-2 --region us-west-2
