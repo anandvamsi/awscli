@@ -1,0 +1,25 @@
+when user in K12 Account want to access resources  in K13
+
+
+step1
+Child Accounts(KI3)
+------------------
+Create a role use "Another AWS account option" and the K12 account number 
+Attach Readonly Access policy to the Role
+arn:aws:iam::<k13-AccountNumber>:role/ServiceNowEC2ReadOnly---ARN 
+
+
+step2
+Master Account(KI2)
+----------------
+1.Create a policy with STS with ARN created in K13Account 
+2.create a role attached policy created in Account1
+3.Create a ec2 and attach the role 
+4.install AWSCLI
+cat config
+[profile <K13-Accountnumber>]
+role_arn = arn:aws:iam::<K13-Accountnumber>:role/ServiceNowEC2ReadOnly
+credential_source = Ec2InstanceMetadata
+
+
+Note we can add multiple child Accounts Similar to this.
