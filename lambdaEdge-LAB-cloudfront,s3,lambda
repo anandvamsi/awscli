@@ -1,0 +1,80 @@
+Goal create a basic authentication for s3 bucket for public websites.
+components used 
+- s3
+- cloudfront
+- lambda@edge
+
+step1:-
+  Create a s3 bucket and insert the files Note::- Dont make it public
+ 
+step2;-
+  create a cloudfront which links to s3 bucket which created above
+  
+step3;-
+  create a lambda with below nodejs code.
+  
+  >>>>--code------->>>>
+  
+  exports.handler = (event, context, callback) => {
+
+  // Get the request and its headers
+  const request = event.Records[0].cf.request;
+  const headers = request.headers;
+
+  // Specify the username and password to be used
+  const user = 'user';
+  const pw = 'password';
+
+  // Build a Basic Authentication string
+  const authString = 'Basic ' + new Buffer(user + ':' + pw).toString('base64');
+
+  // Challenge for auth if auth credentials are absent or incorrect
+  if (typeof headers.authorization == 'undefined' || headers.authorization[0].value != authString) {
+    const response = {
+      status: '401',
+      statusDescription: 'Unauthorized',
+      body: 'Unauthorized',
+      headers: {
+        'www-authenticate': [{key: 'WWW-Authenticate', value:'Basic'}]
+      },
+    };
+    callback(null, response);
+  }
+
+  // User has authenticated
+  callback(null, request);
+};
+----------------->>>>>--------------------------------
+Note:- Change the username and password accordily 
+
+Change the lambda role trust and add lambdaedge
+>>>
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": [
+          "edgelambda.amazonaws.com",
+          "lambda.amazonaws.com"
+        ]
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
+
+
+step4;-(Adding lambda to cloufront )
+Navigate to the cloudfront and edit the behaviours
+-click on the Bahaviour edit and scroll down to the section "Function associations - optionalInfo"
+choose "Viewer request" and select lambdaedge ::- provide the lambda ARN 
+- make sure you have the version number 
+save it
+
+step 4;- 
+wait for couple of minutes and Access the url of the cloudfront which will prompt for username and password.
+
+
