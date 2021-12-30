@@ -1,0 +1,33 @@
+Step 1: Install the python packages
+
+pip3 install awscli==1.18.105
+pip3 install botocore==1.17.28
+pip3 install --upgrade keyrings.alt
+pip3 install --upgrade gimme-aws-creds
+
+step2 :- Configure the config file 
+
+[DEFAULT]
+okta_org_url = https://<ORGName>.okta.com
+okta_auth_server = 
+client_id = 
+gimme_creds_server = appurl
+aws_appname = 
+aws_rolename = arn:aws:iam::<MasterAccountID>:role/UsersGroupAdmin
+write_aws_creds = True
+cred_profile = hv-master_source
+okta_username = <ADUserID>
+app_url = https://<orgName>.okta.com/home/amazon_aws/<APPID>/272
+resolve_aws_alias = True
+include_path = False
+preferred_mfa_type = push
+remember_device = False
+aws_default_duration = 43200
+device_token = 
+output_format = json
+
+
+step3:- 
+#gimme-aws-creds
+This will generate the creds in the ~/.aws/credential file.
+
