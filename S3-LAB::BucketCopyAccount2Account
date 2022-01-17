@@ -67,6 +67,6 @@ Create a IAM policy
     ]
 }
 
-step3:
+step3: Create A ec2 attach this policy in ec2 In the Destination Account
 Create a role/IAM user from this policy execute a command.
 aws s3 sync s3://prodstarsoft s3://accountcopystartsoft --source-region us-west-2 --region us-west-2
