@@ -5,6 +5,14 @@ pip3 install botocore==1.17.28
 pip3 install --upgrade keyrings.alt
 pip3 install --upgrade gimme-aws-creds
 
+Please note there should be config file in the location ~/.aws/config
+sample entries
+[profile <Account name>]
+source_profile=hv-master_source
+role_arn = arn:aws:iam::<Account no>:role/OrganizationAccountAccessRole
+region = us-west-2
+
+
 step2 :- Configure the config file 
 /home/anand/.okta_aws_login_config
 [DEFAULT]
