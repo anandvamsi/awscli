@@ -33,12 +33,13 @@ aws dynamodb export-table-to-point-in-time \
 --s3-bucket s3-cloudaffaire-dynamodb-table \
 --s3-prefix myexport \
 
-
+##Import This requires AWS version2
 #Usecase example
 /usr/local/bin/aws dynamodb export-table-to-point-in-time \
 > --table-arn arn:aws:dynamodb:us-west-2:21008XXXX:table/vault-backup-db-1 \
 > --s3-bucket devesXXXXX123 \
 > --export-format DYNAMODB_JSON
+
 {
     "ExportDescription": {
         "ExportArn": "arn:aws:dynamodb:us-west-2:21008XXXX:table/vault-backup-db-1/export/016532xxx95194543-ba5a558f",
@@ -53,4 +54,9 @@ aws dynamodb export-table-to-point-in-time \
         "ExportFormat": "DYNAMODB_JSON"
     }
 }
---export-format DYNAMODB_JSON
+
+
+
+#To check the status of the export
+/usr/local/bin/aws dynamodb describe-export --export-arn arn:aws:dynamodb:us-west-2:2100XXXXXXX2:table/vault-backup-db-1/export/01653298885194
+543-ba5a558f
