@@ -27,3 +27,9 @@ aws dynamodb batch-write-item --request-items file://data.json --region us-west-
 }
 
 
+## Taking a backup and exporting to s3 bucket
+aws dynamodb export-table-to-point-in-time \
+--table-arn $TABLE_ARN \
+--s3-bucket s3-cloudaffaire-dynamodb-table \
+--s3-prefix myexport \
+--export-format DYNAMODB_JSON
