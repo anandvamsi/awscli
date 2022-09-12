@@ -1,2 +1,9 @@
 ##Quey to list the running instnances pvt and public IP address
 aws ec2 describe-instances  --filters Name=instance-state-name,Values=running   --query 'Reservations[*].Instances[*].[PrivateIpAddress,PublicIpAddress]' --output table
+
+
+Query to list the IAM roles attached to ec2 instance
+aws ec2 describe-iam-instance-profile-associations --region us-west-2
+
+Query to disassociate the IAM role// has to done if its not working from from UI, use cli commands
+aws ec2 disassociate-iam-instance-profile --association-id iip-assoc-XXXXXXXXXXXXXX
