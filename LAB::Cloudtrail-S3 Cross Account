@@ -1,0 +1,35 @@
+In production we need to keep one account as the logging account and where other Account send logs to logging Accout
+In order to send logs to logging account which is stored in s3 bucket.
+we need to have s3 bucket policy for the bucket in the logging account
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "AWSCloudTrailAclCheck20131101",
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "cloudtrail.amazonaws.com"
+        },
+        "Action": "s3:GetBucketAcl",
+        "Resource": "arn:aws:s3:::kplabs-central-logs-cloudtrail"
+      },
+      {
+        "Sid": "AWSCloudTrailWrite20131101",
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "cloudtrail.amazonaws.com"
+        },
+        "Action": "s3:PutObject",
+        "Resource": "arn:aws:s3:::kplabs-central-logs-cloudtrail/*",
+        "Condition": { 
+          "StringEquals": { 
+            "aws:SourceArn": "arn:aws:cloudtrail:*:<Account number>:trail/demo-trail",
+            "s3:x-amz-acl": "bucket-owner-full-control"
+          }
+        }
+      }
+    ]
+  }
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
