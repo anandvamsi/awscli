@@ -1,0 +1,4 @@
+Imageine a case where you want to copy data from bucket to same bucket
+aws s3 sync s3://sourcebucket s3://destination-ubucket
+
+usecase:- when you want to create a backup bucket to do some RandD work 
